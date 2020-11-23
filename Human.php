@@ -37,7 +37,8 @@ class Human
             // sql to create table
             $sql = "CREATE TABLE IF NOT EXISTS $table_name (
 id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-name VARCHAR(30) NOT NULL
+name VARCHAR(30) NOT NULL,
+number INT(100) NOT NULL
 )";
 
 
@@ -58,7 +59,10 @@ name VARCHAR(30) NOT NULL
         $this-> user = $user;
         $this-> password = $password;
         $this-> table_name = $table_name;
+
+        // initialize variables
         $name = $_POST['name'];
+        $number = $_POST['number'];
 
         try {
 
@@ -66,8 +70,8 @@ name VARCHAR(30) NOT NULL
             // set the PDO error mode to exception
             $conn -> setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-            $sql = "INSERT INTO $table_name (name)
-VALUES ('$name')";
+            $sql = "INSERT INTO $table_name (name, number)
+VALUES ('$name', $number)";
             // use exec() because no resulta are returned
             $conn -> exec($sql);
             echo '<br>';
@@ -81,14 +85,19 @@ VALUES ('$name')";
 
     }
 
+
 }
 
+
+/// place for instance object and variable for db
 
 $servername = 'localhost';
 $dbname = 'test';
 $username = 'testuser';
 $password = 'ald123';
-$table = 'new';
+$table = 'second';
+
+
 
 
 $queen = new Human;
@@ -96,5 +105,4 @@ $queen -> set_name();
 $queen -> get_name();
 $queen -> set_db($servername, $dbname, $username, $password, $table);
 echo '<br>';
-
 $queen -> insert_db($servername, $dbname, $username, $password, $table);
